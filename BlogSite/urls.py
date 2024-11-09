@@ -19,5 +19,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('main.urls'))
+    path('', include('main.urls')),
+    # prebuilt urls that will automatically handle login logout password reset etc
+    # they will render those specific templates corresponding to the sepcific names (login, logout, etc) from registration folder
+    path('', include('django.contrib.auth.urls')),
 ]
