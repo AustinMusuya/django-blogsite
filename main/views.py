@@ -24,3 +24,8 @@ def sign_up(request):
     else:
         form = RegisterForm
     return render(request, 'registration/sign-up.html', {'form': form})
+
+
+def user_logout(request):
+    logout(request)  # This calls Django's logout function
+    return redirect('/login')
