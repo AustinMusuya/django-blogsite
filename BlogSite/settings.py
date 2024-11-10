@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'BlogSite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'school',
+        'NAME': 'blog',
         "USER": "root",
         "PASSWORD": "Chrislil1!",
         "HOST": "localhost",
