@@ -26,9 +26,27 @@
         </div>
         <div>
           <ul class="navbar-nav">
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+              <span class="nav-link">Logged in as {{ user.username }} | </span>
+            </li>
+              <li class="nav-item">
+                <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                  {% csrf_token %}
+                  <button type="submit" class="nav-link" style="background: none; border: none; color: white; cursor: pointer;">
+                    Logout
+                  </button>
+              </form>
+            </li>
+          
+            {% comment %} <li class="nav-item">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li> {% endcomment %}
+            {% else %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'login' %}">Login</a>
             </li>
+            {% endif %}
           </ul>
         </div>
       </div>
