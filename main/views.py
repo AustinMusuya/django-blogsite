@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import RegisterForm, PostForm
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth import login, logout, authenticate
 from .models import Post
 
@@ -12,10 +12,10 @@ def home(request):
     posts = Post.objects.all() # get all instances of Post class
     if request.method == 'POST':
         post_id = request.POST.get('post-id') # store the post id value from frontend to variable
-        
+
         # write logic to delete post that matches the post id
         post_to_delete = Post.objects.filter(id=post_id).first()
-        if post_to_delete and post_to_delete.author == request.user:
+        if post_to_delete and (post_to_delete.author == request.user or request.user.has_perm('main.delete_post')):
             post_to_delete.delete() 
 
 
@@ -23,6 +23,7 @@ def home(request):
 
 
 @login_required(login_url='/login')
+@permission_required('main.add_post', login_url='/login')
 def create_post(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
