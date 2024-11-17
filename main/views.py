@@ -2,18 +2,24 @@ from django.shortcuts import render, redirect
 from .forms import RegisterForm, PostForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
+from .models import Post
 
 # Create your views here.
 
 
 @login_required(login_url='/login')
 def home(request):
-    name = {
-        'first_name': 'Austin',
-        'second_name': 'Musuya'
-    }
+    posts = Post.objects.all() # get all instances of Post class
+    if request.method == 'POST':
+        post_id = request.POST.get('post-id') # store the post id value from frontend to variable
+        
+        # write logic to delete post that matches the post id
+        post_to_delete = Post.objects.filter(id=post_id).first()
+        if post_to_delete and post_to_delete.author == request.user:
+            post_to_delete.delete() 
 
-    return render(request, 'main/home.html', {'name': name})
+
+    return render(request, 'main/home.html', {'posts': posts})
 
 
 @login_required(login_url='/login')
