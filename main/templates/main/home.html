@@ -12,7 +12,7 @@
             <p>{{ post.description }}</p>
         </div>
         <div>
-            {% if user == post.author %}
+            {% if user == post.author or perms.main.delete_post %}
             <form action="" method="post">
                 {% csrf_token %}
                 {% comment %} try add name & value to button that sends the post id to the backend {% endcomment %}
