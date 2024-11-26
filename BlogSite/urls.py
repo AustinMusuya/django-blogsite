@@ -16,6 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from api.views import PostViewSet
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register('my-posts', PostViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,4 +28,5 @@ urlpatterns = [
     # prebuilt urls that will automatically handle login logout password reset etc
     # they will render those specific templates corresponding to the sepcific names (login, logout, etc) from registration folder
     path('', include('django.contrib.auth.urls')),
+    path('api/', include(router.urls))
 ]
